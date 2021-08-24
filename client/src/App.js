@@ -22,12 +22,12 @@ const UserSignOutWithContext = withContext(UserSignOut);
 function App() {
 
   return (
-      <BrowserRouter>
         <div className="App">
             <HeaderWithContext />
+            <BrowserRouter>
                 <Switch>
                     <Route exact path="/" render={() => <Redirect to="/courses" />} />
-                    <Route path="/courses" component={Courses} />
+                    <Route exact path="/courses" component={Courses} />
                     <PrivateRoute path="/create-course" component={CreateCourse} />
                     <PrivateRoute path="/courses/:id/update" component={UpdateCourse} />
                     <Route path="/courses/:id" component={CourseDetail} />
@@ -36,8 +36,8 @@ function App() {
                     <Route path="/signout" component={UserSignOutWithContext} />
                     <Route component={NotFound} />
                 </Switch>
+            </BrowserRouter>
         </div>
-      </BrowserRouter>
   );
 }
 

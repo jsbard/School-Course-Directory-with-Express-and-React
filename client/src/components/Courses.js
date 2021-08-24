@@ -18,7 +18,6 @@ class Courses extends Component {
     componentDidMount() {
         this.getCourses()
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     courses: res.data
                 })

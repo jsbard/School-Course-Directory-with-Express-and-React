@@ -19,7 +19,7 @@ export class Provider extends Component {
         const { authenticatedUser } = this.state;
 
         const value = {
-            authenticatedUser,
+            authenticatedUser: this.state.authenticatedUser,
             data: this.data,
             actions: {
                 signIn: this.signIn,
@@ -43,6 +43,7 @@ export class Provider extends Component {
                     authenticatedUser: user,
                 };
             });
+            console.log(this.state);
         }
         return user;
     }

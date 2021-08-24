@@ -2,7 +2,6 @@ import {React, Component} from 'react';
 
 const Header = (props) => {
     const { context } = props;
-    console.log(context);
     const authUser = context.authenticatedUser;
 
     return(
