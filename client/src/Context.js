@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Data from "./Data";
+import Cookies from "js-cookie";
 
 const Context = React.createContext();
 
@@ -12,6 +13,11 @@ export class Provider extends Component {
     constructor() {
         super();
         this.data = new Data();
+
+        this.cookie = Cookies.get("authenticatedUser");
+        this.state = {
+            authenticatedUser: this.cookie ? JSON.parse(this.cookie) : null,
+        }
     }
 
     render() {
@@ -19,12 +25,17 @@ export class Provider extends Component {
         const { authenticatedUser } = this.state;
 
         const value = {
-            authenticatedUser: this.state.authenticatedUser,
+            authenticatedUser: authenticatedUser,
             data: this.data,
+            formErrors: {},
             actions: {
                 signIn: this.signIn,
-                signOut: this.signOut
-            }
+                signOut: this.signOut,
+                createCourse: this.createCourse,
+                getCourse: this.getCourse,
+                updateCourse: this.updateCourse,
+                deleteCourse: this.deleteCourse
+            },
         }
 
         return (
@@ -41,16 +52,45 @@ export class Provider extends Component {
             this.setState(() => {
                 return {
                     authenticatedUser: user,
+                    authenticatedPassword: password
                 };
             });
-            console.log(this.state);
+            this.state.authenticatedUser.password = password;
+            Cookies.set("authenticatedUser", JSON.stringify(user), {expires: 1});
+            console.log(user);
         }
         return user;
     }
 
     signOut = () => {
         this.setState({ authenticatedUser: null });
+        Cookies.remove("authenticatedUser");
     }
+
+    getCourse = async (id, user) => {
+        return await this.data.getCourse(id);
+    }
+
+    createCourse = async (course, user) => {
+        await this.data.createCourse(course, user)
+            .then(res => {
+                if (res.message){
+                    console.log(res.message);
+                    return res.message;
+                } else {
+                    return [];
+                }
+            });
+    }
+
+    updateCourse = (course, id, user) => {
+        this.data.updateCourse(course, id, user);
+    }
+
+    deleteCourse = (id, user) => {
+        this.data.deleteCourse(id, user);
+    }
+
 }
 
 export const Consumer = Context.Consumer;

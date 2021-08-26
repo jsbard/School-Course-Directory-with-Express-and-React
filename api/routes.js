@@ -11,7 +11,7 @@ router.get("/users", authenticateUser, async (req, res) => {
         try {
             const user = await User.findByPk(req.currentUser.id, {
                 attributes: {
-                    exclude: ["password", "createdAt", "updatedAt"]
+                    exclude: ["createdAt", "updatedAt"]
                 }
             });
             res.json(user);

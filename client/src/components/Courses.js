@@ -1,5 +1,4 @@
-import {React, Component, useEffect} from 'react';
-import withContext from "../Context";
+import {React, Component} from 'react';
 import config from "../config";
 import axios from "axios";
 

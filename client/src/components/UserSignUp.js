@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import {Link, Redirect} from 'react-router-dom';
-import Header from "./Header";
 
 export default class UserSignUp extends Component {
     state = {
@@ -14,10 +12,6 @@ export default class UserSignUp extends Component {
 
     render() {
         let {
-            firstName,
-            lastName,
-            emailAddress,
-            password,
             errors,
         } = this.state;
 
@@ -68,10 +62,12 @@ export default class UserSignUp extends Component {
 
     submit = () => {
 
-        this.state.firstName = document.getElementById("firstName").value;
-        this.state.lastName = document.getElementById("lastName").value;
-        this.state.emailAddress = document.getElementById("emailAddress").value;
-        this.state.password = document.getElementById("password").value;
+        this.setState({
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            emailAddress: document.getElementById("emailAddress").value,
+            password: document.getElementById("password").value
+        });
 
         const { context } = this.props;
 
@@ -90,7 +86,10 @@ export default class UserSignUp extends Component {
                 if (errors.length) {
                     this.setState({errors});
                 } else {
-                    console.log(`${user.emailAddress} is successfully signed up and authenticated!`);
+                    context.actions.signIn(user.emailAddress, user.password)
+                        .then(() => {
+                            this.props.history.push('/courses');
+                        });
                 }
             })
             .catch (err => {

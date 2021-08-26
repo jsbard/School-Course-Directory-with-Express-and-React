@@ -1,5 +1,4 @@
 import {React, Component} from 'react';
-import Header from "./Header";
 
 class UserSignIn extends Component {
 
@@ -10,6 +9,7 @@ class UserSignIn extends Component {
     }
 
     render() {
+
         return (
             <div id="root">
                 <main>
@@ -48,6 +48,7 @@ class UserSignIn extends Component {
 
     submit = () => {
         const { context } = this.props;
+        const { from } = this.props.location.state ||  { from: { pathname: "/courses" } };
         const username = document.getElementById("emailAddress").value;
         const password = document.getElementById("password").value;
         context.actions.signIn(username, password)
@@ -55,8 +56,7 @@ class UserSignIn extends Component {
                 if (user === null) {
                     return {errors: ["Sign in was unsuccessful"]}
                 } else {
-                    this.props.history.push("/courses");
-                    console.log(`SUCCESS! ${username} is now signed in!`);
+                    this.props.history.push(from);
                 }
             })
             .catch(err => {
