@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 export default class UserSignUp extends Component {
+
+    //Initial state
     state = {
         value: "",
         firstName: "",
@@ -14,8 +16,6 @@ export default class UserSignUp extends Component {
         let {
             errors,
         } = this.state;
-
-        console.log(this.state.errors);
 
         return (
             <div id="root">
@@ -51,6 +51,7 @@ export default class UserSignUp extends Component {
         );
     }
 
+    // Change event for inputs
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -64,21 +65,24 @@ export default class UserSignUp extends Component {
 
     submit = () => {
 
-            const firstName = document.getElementById("firstName").value;
-            const lastName = document.getElementById("lastName").value;
-            const emailAddress = document.getElementById("emailAddress").value;
-            const password = document.getElementById("password").value;
+        // Grab input values
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        const emailAddress = document.getElementById("emailAddress").value;
+        const password = document.getElementById("password").value;
 
         const { context } = this.props;
 
+        // Bundle input values into object
         const user = {
             firstName,
             lastName,
             emailAddress,
             password
-
         };
 
+        // Send errors to state for render if user can't be created
+        // If user is created, sign user in and render "courses" component
         context.data.createUser(user)
             .then(errors => {
                 if (errors.length) {

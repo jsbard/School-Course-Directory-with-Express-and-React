@@ -5,15 +5,18 @@ import axios from "axios";
 
 class Courses extends Component {
 
+    // Initial state
     state = {
         courses: []
     }
 
+    // Get all courses from api
     getCourses =  () => {
         const courses = axios.get(config.apiBaseUrl + "/courses");
         return courses;
     }
 
+    // Push courses to state
     componentDidMount() {
         this.getCourses()
             .then(res => {
@@ -24,7 +27,7 @@ class Courses extends Component {
     }
 
     render() {
-
+        // Loop over all courses and render each as it's own clickable div
         return (
             <div id="root">
                 <main>

@@ -4,6 +4,8 @@ const Header = (props) => {
     const { context } = props;
     const authUser = context.authenticatedUser;
 
+    // Render sign up and sign in links if user is logged out,
+    // Render personlized welcome message and sign out link if user is signed in
     return(
         <header>
             <div className="wrap header--flex">

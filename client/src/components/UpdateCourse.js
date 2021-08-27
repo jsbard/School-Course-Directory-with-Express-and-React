@@ -2,6 +2,7 @@ import {React, Component} from 'react';
 
 class UpdateCourse extends Component {
 
+    // Initial state
     state = {
         course: {},
         author: "",
@@ -13,6 +14,7 @@ class UpdateCourse extends Component {
         errors: null
     }
 
+    // Get specific course from url "id" parameter and push to state
     componentDidMount() {
         const { context } = this.props;
         const id = this.props.match.params.id;
@@ -74,6 +76,7 @@ class UpdateCourse extends Component {
         )
     }
 
+    // Change event to handle input change
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -85,8 +88,10 @@ class UpdateCourse extends Component {
         });
     }
 
+    // Submit course update form
     submit = async () => {
         const { context } = this.props;
+        // Get values of inputs
         const title = document.getElementById("courseTitle").value;
         const description = document.getElementById("courseDescription").value;
         const estimatedTime = document.getElementById("estimatedTime").value;
@@ -94,6 +99,7 @@ class UpdateCourse extends Component {
         const user = context.authenticatedUser;
         const id = this.props.match.params.id;
 
+        // Bundle input values into object
         const course = {
             title: title,
             description: description,
@@ -101,6 +107,8 @@ class UpdateCourse extends Component {
             materialsNeeded: materialsNeeded
         }
 
+        // Redirect to courses is server response is OK,
+        // otherwise receive the errors and set state to render errors in DOM
         const res = await context.actions.updateCourse(course, id, user);
         if (res === undefined){
             this.props.history.push("/");

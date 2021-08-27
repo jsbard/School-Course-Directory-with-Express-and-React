@@ -2,6 +2,7 @@ import {React, Component} from 'react';
 
 class UserSignIn extends Component {
 
+    // Initial state
     state = {
         username: '',
         password: '',
@@ -34,7 +35,7 @@ class UserSignIn extends Component {
         )
     }
 
-
+    // Change event for inputs
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -49,8 +50,12 @@ class UserSignIn extends Component {
     submit = () => {
         const { context } = this.props;
         const { from } = this.props.location.state ||  { from: { pathname: "/courses" } };
+        // Get username and password from input values
         const username = document.getElementById("emailAddress").value;
         const password = document.getElementById("password").value;
+
+        // Set sign in error if user does not exist,
+        // otherwise return signed in user to page they came from
         context.actions.signIn(username, password)
             .then( user => {
                 if (user === null) {

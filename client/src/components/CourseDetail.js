@@ -10,6 +10,7 @@ class CourseDetail extends Component {
     constructor(props) {
         super(props);
 
+        // Get specific course from api using url parameter
         axios.get(config.apiBaseUrl + "/courses/" + this.props.match.params.id)
             .then(res => {
                 try {
@@ -24,6 +25,7 @@ class CourseDetail extends Component {
             });
     }
 
+    // Initial state
     state = {
         courses: {},
         user: {},
@@ -41,13 +43,14 @@ class CourseDetail extends Component {
             materials = materialsNeeded;
         }
 
+        // Render the specific course if user is logged in
         if (this.state.user && context.authenticatedUser) {
             return (
                 <div id="root">
                     <main>
                         <div className="actions--bar">
                             <div className="wrap">
-                                {
+                                { // Render update and delete buttons only if the course is owned by the logged in user
                                     (this.state.user.emailAddress === context.authenticatedUser.emailAddress) && (
                                         <Fragment>
                                             <Link className="button"
@@ -97,6 +100,7 @@ class CourseDetail extends Component {
         }
     }
 
+    // Delete Course
     delete = () => {
         const { context } = this.props;
         const id = this.props.match.params.id;

@@ -2,6 +2,7 @@ import {React, Component} from 'react';
 
 class CreateCourse extends Component {
 
+    // Initial state
     state = {
         errors: null
     }
@@ -52,12 +53,15 @@ class CreateCourse extends Component {
 
     submit = async () => {
         const { context } = this.props;
+        // Get values of inputs
         const title = document.getElementById("courseTitle").value;
         const description = document.getElementById("courseDescription").value;
         const estimatedTime = document.getElementById("estimatedTime").value;
         const materialsNeeded = document.getElementById("materialsNeeded").value;
+
         const user = context.authenticatedUser;
 
+        // Bundle course data into object
         const course = {
             title: title,
             description: description,
@@ -67,6 +71,7 @@ class CreateCourse extends Component {
         }
 
         const res = await context.actions.createCourse(course, user);
+        // If server response is OK, redirect to courses, otherwise set errors in state to render
         if (res === undefined){
             this.props.history.push("/");
         } else {
@@ -75,7 +80,6 @@ class CreateCourse extends Component {
             })
         }
     }
-
 
     cancel = () => {
         this.props.history.push("/courses");

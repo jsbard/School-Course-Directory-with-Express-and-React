@@ -13,6 +13,8 @@ import PrivateRoute from "./PrivateRoute";
 import NotFound from "./components/NotFound";
 import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 
+
+// Declare all components that require context
 const HeaderWithContext = withContext(Header);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
