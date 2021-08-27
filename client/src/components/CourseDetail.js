@@ -41,7 +41,7 @@ class CourseDetail extends Component {
             materials = materialsNeeded;
         }
 
-        if (this.state.user !== null) {
+        if (this.state.user && context.authenticatedUser) {
             return (
                 <div id="root">
                     <main>
@@ -57,10 +57,10 @@ class CourseDetail extends Component {
                                                 e.preventDefault();
                                                 this.delete();
                                             }} href="#">Delete Course</Link>
+                                            <Link className="button button-secondary" to="/">Return to List</Link>
                                         </Fragment>
                                     )
                                 }
-                                <a className="button button-secondary" href="index.html">Return to List</a>
                             </div>
                         </div>
 
@@ -93,7 +93,7 @@ class CourseDetail extends Component {
                 </div>
             )
         } else {
-            return <Redirect to="/coursenotfound" />
+            return <Redirect to="/notfound" />
         }
     }
 

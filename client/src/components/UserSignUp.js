@@ -15,6 +15,8 @@ export default class UserSignUp extends Component {
             errors,
         } = this.state;
 
+        console.log(this.state.errors);
+
         return (
             <div id="root">
                 <main>
@@ -62,16 +64,12 @@ export default class UserSignUp extends Component {
 
     submit = () => {
 
-        this.setState({
-            firstName: document.getElementById("firstName").value,
-            lastName: document.getElementById("lastName").value,
-            emailAddress: document.getElementById("emailAddress").value,
-            password: document.getElementById("password").value
-        });
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const emailAddress = document.getElementById("emailAddress").value;
+            const password = document.getElementById("password").value;
 
         const { context } = this.props;
-
-        let { firstName, lastName, emailAddress, password } = this.state;
 
         const user = {
             firstName,

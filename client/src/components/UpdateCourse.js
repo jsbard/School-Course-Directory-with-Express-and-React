@@ -9,7 +9,8 @@ class UpdateCourse extends Component {
         courseTitle: "",
         courseDescription: "",
         estimatedTime: "",
-        materialsNeeded: ""
+        materialsNeeded: "",
+        errors: null
     }
 
     componentDidMount() {
@@ -35,6 +36,14 @@ class UpdateCourse extends Component {
                 <main>
                     <div className="wrap">
                         <h2>Update Course</h2>
+                        {this.state.errors !== null &&
+                        <div className="validation--errors">
+                            <h3>Validation Errors</h3>
+                            <ul>
+                                <li>{this.state.errors}</li>
+                            </ul>
+                        </div>
+                        }
                         <form>
                             <div className="main--flex">
                                 <div>
@@ -76,7 +85,7 @@ class UpdateCourse extends Component {
         });
     }
 
-    submit = () => {
+    submit = async () => {
         const { context } = this.props;
         const title = document.getElementById("courseTitle").value;
         const description = document.getElementById("courseDescription").value;
@@ -92,11 +101,15 @@ class UpdateCourse extends Component {
             materialsNeeded: materialsNeeded
         }
 
-        context.actions.updateCourse(course, id, user);
-        this.props.history.push("/courses");
-
+        const res = await context.actions.updateCourse(course, id, user);
+        if (res === undefined){
+            this.props.history.push("/");
+        } else if (res.message){
+            this.setState({
+                errors: res.message
+            })
+        }
     }
-
 
     cancel = () => {
         this.props.history.push("/courses");

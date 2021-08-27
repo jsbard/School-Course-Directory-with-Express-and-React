@@ -23,10 +23,10 @@ class UserSignIn extends Component {
                                 <input id="password" name="password" type="password" />
                                     <button className="button" type="submit" onClick={(e) => {e.preventDefault(); this.submit();}}>Sign In</button>
                                     <button className="button button-secondary"
-                                            onClick={() => this.props.history.push("/signin")}>Cancel
+                                            onClick={() => this.props.history.push("/")}>Cancel
                                     </button>
                         </form>
-                        <p>Don't have a user account? Click here to <a href="sign-up.html">sign up</a>!</p>
+                        <p>Don't have a user account? Click here to <a href="/signup">sign up</a>!</p>
 
                     </div>
                 </main>

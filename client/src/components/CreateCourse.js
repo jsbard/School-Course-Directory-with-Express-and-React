@@ -12,13 +12,14 @@ class CreateCourse extends Component {
                 <main>
                     <div className="wrap">
                         <h2>Create Course</h2>
-                        <div className="validation--errors">
-                            <h3>Validation Errors</h3>
-                            <ul>
-                                <li>Please provide a value for "Title"</li>
-                                <li>Please provide a value for "Description"</li>
-                            </ul>
-                        </div>
+                        {this.state.errors !== null &&
+                            <div className="validation--errors">
+                                <h3>Validation Errors</h3>
+                                <ul>
+                                    <li>{this.state.errors}</li>
+                                </ul>
+                            </div>
+                        }
                         <form>
                             <div className="main--flex">
                                 <div>
@@ -34,7 +35,7 @@ class CreateCourse extends Component {
                                     <label htmlFor="estimatedTime">Estimated Time</label>
                                     <input id="estimatedTime" name="estimatedTime" type="text" />
 
-                                        <label htmlFor="materialsNeeded">Materials Needed (enter materials separated by *)</label>
+                                        <label htmlFor="materialsNeeded">Materials Needed</label>
                                         <textarea id="materialsNeeded" name="materialsNeeded"></textarea>
                                 </div>
                             </div>
@@ -65,9 +66,14 @@ class CreateCourse extends Component {
             userId: user
         }
 
-        const test = await context.actions.createCourse(course, user);
-        console.log(test);
-
+        const res = await context.actions.createCourse(course, user);
+        if (res === undefined){
+            this.props.history.push("/");
+        } else {
+            this.setState({
+                errors: res
+            })
+        }
     }
 
 

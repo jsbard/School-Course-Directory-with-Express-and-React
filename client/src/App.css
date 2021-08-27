@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.signout{
+  margin-left: 1em;
+}

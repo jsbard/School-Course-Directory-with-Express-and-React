@@ -72,19 +72,16 @@ export class Provider extends Component {
     }
 
     createCourse = async (course, user) => {
-        await this.data.createCourse(course, user)
+        return await this.data.createCourse(course, user)
             .then(res => {
                 if (res.message){
-                    console.log(res.message);
                     return res.message;
-                } else {
-                    return [];
                 }
             });
     }
 
-    updateCourse = (course, id, user) => {
-        this.data.updateCourse(course, id, user);
+    updateCourse = async (course, id, user) => {
+        return await this.data.updateCourse(course, id, user);
     }
 
     deleteCourse = (id, user) => {
