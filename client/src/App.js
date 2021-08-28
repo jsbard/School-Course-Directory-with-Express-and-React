@@ -30,8 +30,7 @@ function App() {
             <HeaderWithContext />
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/" render={() => <Redirect to="/courses" />} />
-                    <Route exact path="/courses" component={Courses} />
+                    <Route exact path="/" render={() => <Courses />} />
                     <PrivateRoute path="/courses/create" component={CreateCourseWithContext} />
                     <PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext} />
                     <Route path="/courses/:id" component={CourseDetailWithContext} />

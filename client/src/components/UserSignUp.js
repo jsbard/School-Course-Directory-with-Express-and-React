@@ -90,7 +90,7 @@ export default class UserSignUp extends Component {
                 } else {
                     context.actions.signIn(user.emailAddress, user.password)
                         .then(() => {
-                            this.props.history.push('/courses');
+                            this.props.history.push('/');
                         });
                 }
             })

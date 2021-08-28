@@ -82,7 +82,7 @@ class CreateCourse extends Component {
     }
 
     cancel = () => {
-        this.props.history.push("/courses");
+        this.props.history.push("/");
     }
 }
 
