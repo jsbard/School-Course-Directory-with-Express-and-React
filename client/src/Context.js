@@ -67,7 +67,7 @@ export class Provider extends Component {
         Cookies.remove("authenticatedUser");
     }
 
-    getCourse = async (id, user) => {
+    getCourse = async (id) => {
         return await this.data.getCourse(id);
     }
 

@@ -49,7 +49,7 @@ class UserSignIn extends Component {
 
     submit = () => {
         const { context } = this.props;
-        const { from } = this.props.location.state ||  { from: { pathname: "/courses" } };
+        const { from } = this.props.location.state ||  { from: { pathname: "/" } };
         // Get username and password from input values
         const username = document.getElementById("emailAddress").value;
         const password = document.getElementById("password").value;

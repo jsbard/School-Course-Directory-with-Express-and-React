@@ -11,7 +11,7 @@ import UpdateCourse from "./components/UpdateCourse";
 import CourseDetail from "./components/CourseDetail";
 import PrivateRoute from "./PrivateRoute";
 import NotFound from "./components/NotFound";
-import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 
 
 // Declare all components that require context

@@ -4,6 +4,7 @@ class UpdateCourse extends Component {
 
     // Initial state
     state = {
+        user: null,
         course: {},
         author: "",
         name: "",
@@ -21,6 +22,7 @@ class UpdateCourse extends Component {
         context.actions.getCourse(id)
             .then(res => {
                 this.setState({
+                    user: context.authenticatedUser,
                     course: res,
                     author: `${context.authenticatedUser.firstName} ${context.authenticatedUser.lastName}`,
                     courseTitle: res.title,

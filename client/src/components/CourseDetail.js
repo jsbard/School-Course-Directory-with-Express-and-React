@@ -1,67 +1,75 @@
 import {React, Component, Fragment} from 'react';
 import {Link} from "react-router-dom";
-import axios from "axios";
-import config from "../config";
-import {Redirect} from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
 class CourseDetail extends Component {
+    // Initial state
+    state = {
+        user: {},
+        course: {},
+        courseCreatorEmail: "",
+        author: "",
+        name: "",
+        courseTitle: "",
+        courseDescription: "",
+        estimatedTime: "",
+        materialsNeeded: "",
+        errors: null
 
-    constructor(props) {
-        super(props);
+    }
 
-        // Get specific course from api using url parameter
-        axios.get(config.apiBaseUrl + "/courses/" + this.props.match.params.id)
+    // Get specific course from url "id" parameter and push to state
+    componentDidMount() {
+        const { context } = this.props;
+        const id = this.props.match.params.id;
+        context.actions.getCourse(id)
             .then(res => {
-                try {
-                    this.setState({
-                        courses: res.data,
-                        user: res.data.User,
-                        materials: res.data.materialsNeeded
-                    })
-                } catch (err) {
-                    console.log(err);
-                }
+                this.setState({
+                    user: context.authenticatedUser,
+                    course: res,
+                    courseCreatorEmail: res.User.emailAddress,
+                    author: `${res.firstName} ${res.lastName}`,
+                    courseTitle: res.title,
+                    courseDescription: res.description,
+                    estimatedTime: res.estimatedTime,
+                    materialsNeeded: res.materialsNeeded
+                })
             });
     }
 
-    // Initial state
-    state = {
-        courses: {},
-        user: {},
-        materials: []
-    }
 
     render() {
-        const { context } = this.props;
-        const author = `${this.state.user.firstName} ${this.state.user.lastName}`;
-        const description = this.state.courses.description;
-        const estimatedTime = this.state.courses.estimatedTime;
-        const materialsNeeded = this.state.materials;
+        const author = this.state.author;
+        const description = this.state.courseDescription;
+        const estimatedTime = this.state.estimatedTime;
+        const materialsNeeded = this.state.materialsNeeded;
+        const courseCreatorEmail = this.state.courseCreatorEmail;
         let materials = "";
         if (materialsNeeded !== "") {
             materials = materialsNeeded;
         }
 
+
         // Render the specific course if user is logged in
-        if (this.state.user && context.authenticatedUser) {
             return (
                 <div id="root">
                     <main>
                         <div className="actions--bar">
                             <div className="wrap">
                                 { // Render update and delete buttons only if the course is owned by the logged in user
-                                    (this.state.user.emailAddress === context.authenticatedUser.emailAddress) && (
-                                        <Fragment>
-                                            <Link className="button"
-                                                  to={`/courses/${this.props.match.params.id}/update`}>Update
-                                                Course</Link>
-                                            <Link className="button" onClick={(e) => {
-                                                e.preventDefault();
-                                                this.delete();
-                                            }} href="#">Delete Course</Link>
-                                            <Link className="button button-secondary" to="/">Return to List</Link>
-                                        </Fragment>
+                                    this.state.user && (
+                                        ( this.state.user.emailAddress === courseCreatorEmail) && (
+                                            <Fragment>
+                                                <Link className="button"
+                                                      to={`/courses/${this.props.match.params.id}/update`}>Update
+                                                    Course</Link>
+                                                <Link className="button" onClick={(e) => {
+                                                    e.preventDefault();
+                                                    this.delete();
+                                                }} href="#">Delete Course</Link>
+                                                <Link className="button button-secondary" to="/">Return to List</Link>
+                                            </Fragment>
+                                        )
                                     )
                                 }
                             </div>
@@ -73,7 +81,7 @@ class CourseDetail extends Component {
                                 <div className="main--flex">
                                     <div>
                                         <h3 className="course--detail--title">Course</h3>
-                                        <h4 className="course--name">{this.state.courses.title}</h4>
+                                        <h4 className="course--name">{this.state.courseTitle}</h4>
                                         <p>By {author}</p>
 
                                         <p>
@@ -95,9 +103,6 @@ class CourseDetail extends Component {
                     </main>
                 </div>
             )
-        } else {
-            return <Redirect to="/notfound" />
-        }
     }
 
     // Delete Course
